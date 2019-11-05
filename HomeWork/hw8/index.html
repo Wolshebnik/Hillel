@@ -137,6 +137,7 @@
 	function getArrayClone(arr) {
 		return arr.splice()
 	}
+
 	getArrayClone.toString = console.log('function toString');
 
 	const iron = {
@@ -179,7 +180,7 @@
 	// 8) Какой контекст имеет первый и второй массив?
 	var arr1 = [5, 2, 'a']; // контекст создается во время вызова функции
 	var arr2 = [6, 5, 2, 4, 'a']; // контекст создается во время вызова функции
-	
+
 
 	// 9) Есть два обьекта! Вызвать getSpeed1() с контекстом car2 и getSpeed2 с контекстом car1
 	var car1 = {
@@ -293,30 +294,30 @@
 
 	//12) Дан массив arr! Используя пробежаться по массиву и если все больше или равны 2 то вернуть true! Использовть every метод!
 	const array = [10, 6, 3, 5, 6, 2, 12, 64];
-	
+
 	function everyArr(arr) {
 		return arr.every(item => item >= 2)
 	}
-	
+
 	console.log(everyArr(array));
-	
+
 	// 13) Используя claims переменную выше!! Удилить все элементы у которых статус isClosed!! Подсказка! удалить не значит брать и явно удалять можно использовать метод массивов и вернуть новый и перезаписать!!
-	
+
 	function deleteIsClosed(arr) {
 		let arr1 = [];
 		arr.forEach(obj => {
-			if(obj.status === 'Closed') arr1 = [...arr1,obj];
+			if (obj.status === 'Closed') arr1 = [...arr1, obj];
 		});
-		return arr= arr1;
+		return arr = arr1;
 	}
-	
-console.log(deleteIsClosed(claims));
+
+	console.log(deleteIsClosed(claims));
 
 	// 14) Написать свой собственный filter! Функция должна принимать два параметра массив и функцию!!
 	function filter(array, f) {
 		let newArray = [];
 		array.forEach(item => {
-			if(f(item)) newArray = [...newArray,item];
+			if (f(item)) newArray = [...newArray, item];
 		});
 		return newArray;
 	}
