@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>JAVASCRIPT HW3</title>
+</head>
+
+<body>
+<script>
+	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+	//1) Написать функцию которая принимает 2 параметра перемножает и возвращает значение!!!
+	function multiply(a, b) {
+		console.log('Написать функцию которая принимает 2 параметра перемножает и возвращает значение!!!');
+		return a * b;
+	}
+
+	console.log(multiply(5, 10));
+
+
+	// 2) Написать функцию которая принимает 3 параметра и возвращает найменьшее из них
+	function min(a, b, c) {
+		console.log('Написать функцию которая принимает 3 параметра и возвращает найменьшее из них');
+		let result = (a > b) ? b : a;
+		result = (result > c) ? c : result;
+		return result;
+	}
+
+	console.log(min(100, 33, 11));
+
+	//3) Написать функцию которая
+	//  -принимает массив,
+	//  -сохраняет непарные числа в новый массив,
+	//  -сортирует массив
+	// - и возвращает отсортированный массив
+	function sortOddNumbers(array) {
+		console.log('сортирует массив и возвращает отсортированный массив');
+
+		array.sort((a, b) => a - b);
+		let odd = [];
+		for (let i = 0; i < array.length; i++) {
+			if (array[i] % 2 !== 0) {
+				odd[odd.length] = array[i];
+			}
+		}
+		return odd;
+	}
+
+	console.log(sortOddNumbers([2, 5, 3, 6, 9, 8, 10, 11]));
+
+	function sortOddNumbersTwo(array) {
+		console.log('сортирует массив и возвращает отсортированный массив');
+
+		let odd = [];
+		let out = [];
+		let min = Infinity;
+		let indexCount = Infinity;
+
+		for (let i = 0; i < array.length; i++) {
+			for (let j = 0; j < array.length; j++) {
+				if (array[j] < min) {
+					min = array[j];
+					indexCount = j;
+				}
+			}
+			array[indexCount] = Infinity;
+			odd[odd.length] = min;
+			min = Infinity;
+		}
+
+		for (let i = 0; i < odd.length; i++) {
+			if (odd[i] % 2 !== 0) {
+				out[out.length] = odd[i];
+			}
+		}
+		return out;
+	}
+
+	console.log(sortOddNumbersTwo([2, 5, 3, 6, 9, 8, 10, 11, 6, 66, 5, 55, 13, 133, 15]));
+
+	// 4) Написать функцию котороя принимает массив, и выводит новый массив из тех элементов которые кратны 5!!
+	console.log('Написать функцию котороя принимает массив, и выводит новый массив из тех элементов которые кратны 5!!');
+
+	function multipleOfFive(array) {
+		let divideBy5 = [];
+
+		for (let i = 0; i < array.length; i++) {
+			if (array[i] % 5 === 0) divideBy5[divideBy5.length] = array[i];
+		}
+		return divideBy5;
+	}
+
+	console.log(multipleOfFive([20, 5, 3, 23, 15, 8, 10, 11]));
+
+
+	// 5) Написать функцию котороя принимает массив из строк, и возвращает кокатенацию из элементов первые символы которых
+	// совпадают с этой подстрокой 'jitb'. Используем  toLowerCase() и indexOf() методы  !!
+	console.log('должно вывести javascript is the best');
+
+	function matchWithString(array) {
+		const str = 'jitb';
+		let out = '';
+
+		for (let i = 0, interim; i < array.length; i++) {
+			interim = array[i].toLowerCase();
+			for (let j = 0; j < str.length; j++) {
+				if (interim.indexOf(str[j]) === 0) {
+					out += interim + ' ';
+				}
+			}
+			interim = '';
+		}
+		return out;
+	}
+
+	console.log(matchWithString(['Javascript', 'nice', 'coding', 'is', 'the', 'language', 'Best', 'worst'])); // должно вывести javascript is the best
+
+	// 6) Написать функцию котороя принимает строку и возвращает подстроку и количество таких подстрок в строке!
+	console.log('Написать функцию котороя принимает строку и возвращает подстроку и количество таких подстрок в строке!');
+	function sameSubstring(str) {
+		let subStr = '';
+
+		for (let i = 0; i < str.length; i++) {
+			if (subStr.includes(str[i])) {
+				continue;
+			} else {
+				subStr += str[i];
+			}
+		}
+
+		let count = 0;
+		let pos = 0;
+		
+		while (pos !== -1) {
+			count++;
+			pos = str.indexOf(subStr, pos + 1)
+		}
+		return [subStr, count];
+	}
+
+	console.log(sameSubstring('fdfdfdfd')); // рузльтат массив из ['fd', 4]
+	console.log(sameSubstring('xxxxxx')); // рузльтат массив из ['x', 6]
+	console.log(sameSubstring('xyzxyzxyz')); // рузльтат массив из ['xyz', 3]
+
+	// 7) Написать функцию которая перемножает числа от 5 до 10 через рекурсию!!!
+	console.log('Написать функцию которая перемножает числа от 5 до 10 через рекурсию!!!');
+
+	function recursive(number) {
+		if (number === 10) return 10;
+		return number * recursive(number + 1);
+	}
+
+	console.log(recursive(5));
+
+	// 8) Написать функцию котороя принимает число и проверяет простое ли число, если да то возвращает true иначе false!!
+	console.log('Написать функцию котороя принимает число и проверяет простое ли число, если да то возвращает true иначе false!!');
+	function isPrime(num) {
+		let count = true;
+		for (let i = 2; i < num; i++) {
+			if(num % i !== 0) {
+				continue;
+			}
+			else {
+				count = false;
+			}
+			
+		}
+		return count;
+		
+	}
+
+	console.log(isPrime(7)); // true
+	console.log(isPrime(6)); // false
+	console.log(isPrime(9)); // false
+
+	// Advanced Решить эту задачу другим способом!! То есть реверс главной и побочной!
+	//  1
+	var arr = [
+		[1, 2, 3, 4],
+		[5, 6, 7, 8],
+		[9, 10, 11, 12],
+		[13, 14, 15, 16]
+	];
+	// 2 Создать форму Имя, эмеил, пароль и кнопка send! По клику показать alert, что поля заполнены или наоборот!Можно двинутся дальше и реализовать pop-up а не alert!
+</script>
+</body>
+
+</html>
