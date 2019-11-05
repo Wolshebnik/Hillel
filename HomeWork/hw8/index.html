@@ -135,18 +135,20 @@
 
 	// 6) Переопределить toString функции getArrayClone и обьекта iron
 	function getArrayClone(arr) {
-		// let { power, price} = arr;
-		// return arr.slice();
-		return `${this.power} ${this.price}`
+
+		return arr.splice()
 		
 	}
+	getArrayClone.toString = console.log('function toString');
 
 	const iron = {
 		power: 2000,
 		price: 2500,
-		
+		toString: function () {
+			return this.power + ' ' + this.price;
+		}
 	};
-	console.log(getArrayClone.call(iron));
+	console.log(iron.toString());
 
 	// 7)  Написать функцию которая записывает элементы из массива arr2 в новый массив которых нет в arr1!
 	var arr1 = [5, 2, 'a'];
