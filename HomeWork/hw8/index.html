@@ -306,9 +306,9 @@
 	function deleteIsClosed(arr) {
 		let arr1 = [];
 		arr.forEach(obj => {
-			if (obj.status === 'Closed') arr1 = [...arr1, obj];
+			if (obj.status !== 'Closed') arr1 = [...arr1, obj];
 		});
-		return arr = arr1;
+		return arr = [...arr1];
 	}
 
 	console.log(deleteIsClosed(claims));
