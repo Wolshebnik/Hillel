@@ -1,0 +1,126 @@
+<html>
+
+<head>
+	<title>JAVASCRIPT HW10</title>
+</head>
+
+<body>
+<script>
+	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+	//1) Есть промис! что за параметры принимает функция? Зачем они? как вернуть обьект {id: 10, name: 'Sergei'} и
+	// потом принять его с помощью функции промиса then? Как вернуть ошибку в промисе и потом ее перехватить?
+
+	// Функция принимает два callback: resolve- успешный ответ и reject - ошибка
+	// Для контроля над асинхронными операциями
+
+
+	const pr = new Promise(function (resolve, reject) {
+		if (true) resolve({id: 10, name: 'Sergei'});
+		else reject('Error');
+	});
+
+	pr.then(data => console.log(data)).catch((e) => console.log(e));
+
+	//2) Есть код ! с помощью промисов написать таким образом чтобы выполнилось по порядку от одного до 5!
+	// На данный момент выполнятся setTimeout-ы вконце!!
+
+	let pro1 = new Promise((resolve, reject) => {
+		setTimeout(() => resolve('1'), 1300);
+	});
+	let pro2 = new Promise((resolve, reject) => {
+		resolve('2');
+	});
+	let pro3 = new Promise((resolve, reject) => {
+		resolve('3');
+	});
+	let pro4 = new Promise((resolve, reject) => {
+		setTimeout(() => resolve('4'), 300);
+	});
+	let pro5 = new Promise((resolve, reject) => {
+		resolve('5');
+	});
+
+	pro1.then(data => {
+		console.log(data);
+		return pro2;
+	}).then(data => {
+		console.log(data);
+		return pro3;
+	}).then(data => {
+		console.log(data);
+		return pro4;
+	}).then(data => {
+		console.log(data);
+		return pro5;
+	}).then(data => console.log(data));
+
+	//3) Есть код !  Нужно всего лишь написать комментарий что делает каждая из строчок!
+	const pr2 = new Promise(function (resolve, reject) {
+		resolve({id: 2}) // вызыватеся resolve с объктом
+	});
+	pr2.then((data) => data) // получаем data  и передаеь в новый then data
+	.then((res) => { // получаем res
+		throw new Error('Something went wrong') // выбрасываем в catch
+	})
+	.catch((e) => console.log('ERROR', e)); // ловит ошибку и выводит в консоль
+
+
+	// 4) Использую Promise.all получить массив из промисов и после чего отсортировать тот что возвращает массив!
+	const prom1 = new Promise(function (resolve, reject) {
+		resolve(10);
+	});
+	const prom2 = new Promise(function (resolve, reject) {
+		resolve({id: 3});
+	});
+	const prom3 = new Promise(function (resolve, reject) {
+		resolve([6, 2, 4, 6]);
+	});
+
+	Promise.all([prom1, prom2, prom3])
+	.then(data => data.filter(item => Array.isArray(item)))
+	.then(data => data.map(item => item.sort((a, b) => a - b)))
+	.then(data => console.log(...data));
+
+	// 5) Есть роуты!!
+	// https://playwithpromise.herokuapp.com/api/order-review/last - вернет обьект с id такой( 5d4762e02481a600174fb1ae )
+	// после чего используя id делаем другой запрос
+	// https://playwithpromise.herokuapp.com/api/order-review/getid/{id}
+	// ответ будет обьект у которого будет поле orderList - массив с двух обьектов
+	// https://playwithpromise.herokuapp.com/api/order-system/product/{productId}
+	// у обьектов будет productId еще сделать запрос по productId то есть два запроса ибо 2 обьекта в которых свой productId Promise.all в помощь!!
+	// ВОТ ПРИМЕР ЗАПРОСА по первому URL! Конечно это нужно будет обернуть в промис!
+
+	let getId = new Promise((res, rej) => {
+		var Req = new XMLHttpRequest();
+		Req.open("GET", 'https://playwithpromise.herokuapp.com/api/order-review/last');
+		Req.send();
+		Req.onload = function () {
+			if (!this.responseText) rej('BYE');
+			res(JSON.parse(this.responseText));
+		}
+	});
+
+
+	function getList(url, str) {
+		return new Promise((res, rej) => {
+			var Req = new XMLHttpRequest();
+			Req.open("GET", `${url}${str}`);
+			Req.send();
+			Req.onload = function () {
+				if (!this.responseText) rej('BYE');
+				res(JSON.parse(this.responseText));
+			}
+		});
+	}
+
+	getId.then(({_id: id}) => getList('https://playwithpromise.herokuapp.com/api/order-review/getid/', id))
+	.then(({orderList}) => {
+		let [productId1, productId2] = orderList;
+		return Promise.all([getList('https://playwithpromise.herokuapp.com/api/order-system/product/', productId1.productId), getList('https://playwithpromise.herokuapp.com/api/order-system/product/', productId2.productId)])
+	}).then(data => console.log(data));
+
+</script>
+</body>
+
+</html>
