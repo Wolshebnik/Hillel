@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title>JAVASCRIPT HW3</title>
+	<title>JAVASCRIPT HW9</title>
 </head>
 
 <body>
@@ -31,6 +31,7 @@
 
 	//2) исправить код чтобы консоль логи показывали от 0 до 10, и написать почему сейчас выводит десять десяток!!
 	
+	
 	for (let i = 0; i < 10; i++) { // var глобално, прошлось по циклу и запустило 10 setTimeout и они в event queue к этому времени i = 10 и после как stack  очистился event loop закидывает по очереди из event queue console.log со значением 10
 		setTimeout(() => console.log(i), 0);
 	}
@@ -52,11 +53,10 @@
 
 	const res = getDatas();
 	console.log('RES', res); // вывод 1
-    // у setTimeout нет функии функции
-	setTimeout(console.log('settimeout1'), 100); // вывод 2 // если есть функия вывод 5
-	setTimeout(console.log('settimeout'), 10); // вывод 3 // если есть функия вывод 4
-	console.log('One'); // вывод 4 // если есть функия вывод 2
-	console.log('two'); // вывод 5 // если есть функия вывод 3
+	setTimeout(() =>console.log('settimeout1'), 100); //  вывод 5
+	setTimeout(() =>console.log('settimeout'), 10); //  вывод 4
+	console.log('One'); //  вывод 2
+	console.log('two'); // вывод 3
 
 	// 4) Что выведет alert в setTimeOut
 	setTimeout(function () {
