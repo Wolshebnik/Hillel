@@ -90,17 +90,10 @@
 	// https://playwithpromise.herokuapp.com/api/order-system/product/{productId}
 	// у обьектов будет productId еще сделать запрос по productId то есть два запроса ибо 2 обьекта в которых свой productId Promise.all в помощь!!
 	// ВОТ ПРИМЕР ЗАПРОСА по первому URL! Конечно это нужно будет обернуть в промис!
-
-	let getId = new Promise((res, rej) => {
-		var Req = new XMLHttpRequest();
-		Req.open("GET", 'https://playwithpromise.herokuapp.com/api/order-review/last');
-		Req.send();
-		Req.onload = function () {
-			if (!this.responseText) rej('BYE');
-			res(JSON.parse(this.responseText));
-		}
-	});
-
+	
+	let urlLast = 'https://playwithpromise.herokuapp.com/api/order-review/last';
+	let urlGetId = 'https://playwithpromise.herokuapp.com/api/order-review/getid/';
+	let urlProduct = 'https://playwithpromise.herokuapp.com/api/order-system/product/';
 
 	function getList(url, str) {
 		return new Promise((res, rej) => {
@@ -114,11 +107,13 @@
 		});
 	}
 
-	getId.then(({_id: id}) => getList('https://playwithpromise.herokuapp.com/api/order-review/getid/', id))
+	getList(urlLast, '')
+	.then(({_id: id}) => getList(urlGetId, id))
 	.then(({orderList}) => {
-		let [productId1, productId2] = orderList;
-		return Promise.all([getList('https://playwithpromise.herokuapp.com/api/order-system/product/', productId1.productId), getList('https://playwithpromise.herokuapp.com/api/order-system/product/', productId2.productId)])
-	}).then(data => console.log(data));
+		let [getProductId1, getProductId2] = orderList;
+		return Promise.all([getList(urlProduct, getProductId1.productId), getList(urlProduct, getProductId2.productId)])
+	})
+	.then(data => console.log(data));
 
 </script>
 </body>
