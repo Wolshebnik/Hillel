@@ -101,10 +101,7 @@
 
 	function newClaims(array) {
 		let newObj = {};
-		array.forEach(curr => {
-			let string = curr.id.toString();
-			newObj[string] = curr;
-		});
+		array.forEach(curr => newObj[curr.id] = curr);
 		return newObj;
 	}
 
