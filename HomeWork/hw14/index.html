@@ -68,26 +68,26 @@
 	console.log(seller.getPrice);
 
 	// 4) Пишем свой split и join))!
-	String.prototype.mySplit = function() {
+	String.prototype.mySplit = function(...array) {
 		let arr = [];
-		
-		if (arguments.length === 0) {
-			arr = [...arr, this];
+		let [value] = array;
+		if (value === undefined) {
+			arr.push(this);
 		} else {
 			for (let i = 0; i < this.length; i++) {
-				if (!(arguments === this[i])) arr = [...arr, this[i]]
+				if (!(value === this[i])) arr = [...arr, this[i]]
 			}
 		}
 		return arr;
 	};
 	
 	console.log(('1 2 3 4 5').mySplit());
-	console.log(('1 2 3 4 5').mySplit(''));
-	console.log(('1 2 3 4 5').split(' '));
-	console.log(('1-2-3-4-5').split('-'));
+	console.log(('12345').mySplit(''));
+	console.log(('1 2 3 4 5').mySplit(' '));
+	console.log(('1-2-3-4-5').mySplit('-'));
 
 
-	Array.prototype.myJoin = function () {
+	Array.prototype.myJoin = function (...array) {
 		let str = '';
 
 		function iteration(arr, value) {
@@ -96,23 +96,22 @@
 				else str += curr;
 			});
 		}
-
-		if (arguments.length === 0) {
+		let [value] = array;
+		if (value === undefined) {
 			iteration(this, ',');
-		} else if (arguments === '') {
+		} else if (value === '') {
 			iteration(this, '');
 		} else {
-			let [value] = arguments;
 			iteration(this, value)
 		}
 
 		return str;
 	};
 
-	console.log([1, 2, 3, 4, 5].join());
-	console.log([1, 2, 3, 4, 5].join(''));
-	console.log([1, 2, 3, 4, 5].join(' '));
-	console.log([1, 2, 3, 4, 5].join('___'));
+	console.log([1, 2, 3, 4, 5].myJoin());
+	console.log([1, 2, 3, 4, 5].myJoin(''));
+	console.log([1, 2, 3, 4, 5].myJoin(' '));
+	console.log([1, 2, 3, 4, 5].myJoin('___'));
 
 	// 5) Ну и на последок перепишем класс в вид самовыз функция которая возвращает функцию-конструктор
 	class NewApp {
