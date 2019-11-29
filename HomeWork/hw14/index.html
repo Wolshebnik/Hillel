@@ -1,0 +1,145 @@
+<html>
+
+<head>
+	<title>JAVASCRIPT</title>
+</head>
+
+<body>
+<script>
+	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+	//1) Есть две функции конструктор! Нужно c помощью prototype сделать second родителем first!
+	function A(name) {
+		this.name = name;
+	}
+
+	function B(lastName) {
+		this.lastName = lastName;
+	}
+
+	// A.prototype =  new B('Shakhov');
+	const first = new A('Sergei');
+	const second = new B('Shakhov');
+	first.__proto__ = second;
+
+	console.log(first.name);
+	console.log(first.lastName);
+
+	//2) Создать класс функция конструктор которого принимает два параметра position, salary,
+	// также создать одно private поле positions = ['software developer', 'hr manager', 'project manager'], getter(get функция)!
+	// которая смотрит на поле positions, и если в position есть одно из перечисленных то возвращает true иначе false
+	class NewClass {
+		#positions = ['software developer', 'hr manager', 'project manager'];
+
+		constructor(position, salary) {
+			this.position = position;
+			this.salary = salary;
+		}
+
+		get getterPosition() {
+			return this.#positions.includes(this.position);
+		}
+	}
+
+	let newClass = new NewClass('software developer', 2000);
+	console.log(newClass.getterPosition);
+
+	//3) Есть класс App! Добавить две функции одна из них устанавливает product(создает поле product обьект с полем name, price), вторая функция получает price
+	// и одно статическое свойство yearOfIssue
+	class App {
+		constructor() {
+			this.name;
+			this.price;
+		};
+
+		get getPrice() {
+			return this.price;
+		}
+
+		create(name, price) {
+			this.name = name;
+			this.price = price;
+
+		}
+	}
+
+	let seller = new App();
+	seller.create('Andrey', 2000);
+	console.log(seller.getPrice);
+
+	// 4) Пишем свой split и join))!
+	String.prototype.mySplit = function() {
+		let arr = [];
+		
+		if (arguments.length === 0) {
+			arr = [...arr, this];
+		} else {
+			for (let i = 0; i < this.length; i++) {
+				if (!(arguments === this[i])) arr = [...arr, this[i]]
+			}
+		}
+		return arr;
+	};
+	
+	console.log(('1 2 3 4 5').mySplit());
+	console.log(('1 2 3 4 5').mySplit(''));
+	console.log(('1 2 3 4 5').split(' '));
+	console.log(('1-2-3-4-5').split('-'));
+
+
+	Array.prototype.myJoin = function () {
+		let str = '';
+
+		function iteration(arr, value) {
+			arr.forEach((curr, index) => {
+				if (!(arr.length === index + 1)) str += `${curr}${value}`;
+				else str += curr;
+			});
+		}
+
+		if (arguments.length === 0) {
+			iteration(this, ',');
+		} else if (arguments === '') {
+			iteration(this, '');
+		} else {
+			let [value] = arguments;
+			iteration(this, value)
+		}
+
+		return str;
+	};
+
+	console.log([1, 2, 3, 4, 5].join());
+	console.log([1, 2, 3, 4, 5].join(''));
+	console.log([1, 2, 3, 4, 5].join(' '));
+	console.log([1, 2, 3, 4, 5].join('___'));
+
+	// 5) Ну и на последок перепишем класс в вид самовыз функция которая возвращает функцию-конструктор
+	class NewApp {
+		constructor(object) {
+			this.object = object;
+		}
+
+		getObject() {
+			return this.object;
+		}
+	}
+
+	let NewApp1 = (function () {
+		function NewApp1(object) {
+			this.object = object;
+		}
+
+		return NewApp1;
+	})();
+	NewApp1.prototype.getObject = function () {
+		return this.object;
+	};
+
+	let newApp1 = new NewApp1({name: 'Andrey'});
+	console.log(newApp1.getObject());
+
+</script>
+</body>
+
+</html>
