@@ -1,0 +1,111 @@
+<html>
+
+<head>
+	<title>JAVASCRIPT</title>
+</head>
+
+<body>
+<script>
+	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+	//1) Создать класс Building принимающий  параметр manufacturer,  и 2-х его наследников Restaurant, Hotel где эти 2 класса принимают еще один парамет Number of staff.
+
+	class Building {
+		constructor(manufacturer) {
+			this.manufacturer = manufacturer;
+		}
+
+		static avgCount(building) {
+			return building.reduce((prev, next) => {
+				return prev + next.numberOfStaff;
+			}, 0) / building.length;
+		}
+	}
+
+	class Restaurant extends Building {
+		constructor(manufacturer, numberOfStaff) {
+			super(manufacturer);
+			this.numberOfStaff = numberOfStaff;
+		}
+	}
+
+	class Hotel extends Building {
+		constructor(manufacturer, numberOfStaff) {
+			super(manufacturer);
+			this.numberOfStaff = numberOfStaff;
+		}
+	}
+
+	const employeeRestaurant = new Restaurant('restaurant', 30);
+	const employeeHotel = new Hotel('hotel', 30);
+	let avg = Building.avgCount([employeeHotel, employeeRestaurant]);
+	console.log(avg);
+
+
+	// нужно подсчитать среднее арифметическое всех сотрудников
+
+
+	//2) Создать класс Builder со свойствами name, salary, workingHoursPerDay,и реализовать 2 класса со статическими
+	// функциями, первый класс имеет функцию которая сортирует по salary и принимает массив из строителей, а второй находит сотрудника у которого самое большое workingHoursPerDay
+	class Builder {
+		constructor(name, salary, workingHoursPerDay) {
+			this.name = name;
+			this.salary = salary;
+			this.workingHoursPerDay = workingHoursPerDay;
+		}
+
+		static sortSalary(builder) {
+			return builder.sort((min, max) => min.salary - max.salary);
+		}
+		static maxHours (builder) {
+			return builder.reduce((prev, next) => {
+				if(prev.workingHoursPerDay > next.workingHoursPerDay) return prev;
+				else next;
+			})
+		}
+	}
+
+	let builder1 = new Builder('Sergey', 3000, 40);
+	let builder2 = new Builder('Andrey', 2000, 20);
+	let builder3 = new Builder('Vasya', 2500, 30);
+	let salarySort = Builder.sortSalary([builder1, builder2, builder3]);
+	let maxHours = Builder.maxHours([builder1, builder2, builder3]);
+	console.log(salarySort);
+	console.log(maxHours);
+	
+
+	//3) Есть класс App! Который принимает массив с обьектов со свойствами name, country и нужно вернуть обьект с ключами которые являются значениями свойства country где будет массивы с name!
+	// как на уроке одним словом то есть так
+	//
+	const res = {
+		'Ukraine': ['VAsia', 'Petia', 'Boria'],
+		'USA': ['John', 'Ben']
+	};
+	const users = [
+		{name: 'VAsia', country: 'Ukraine'},
+		{name: 'Petia', country: 'Ukraine'},
+		{name: 'Boria', country: 'Ukraine'},
+		{name: 'Ben', country: 'USA'},
+		{name: 'John', country: 'USA'},
+	];
+
+	class App {
+		constructor(users) {
+			this.users = users;
+		};
+		get getRes (){
+			return this.users.reduce((prev, next) => {
+				if (!prev[next.country]) prev[next.country] =[];
+				prev[next.country].push(next.name);
+				return prev;
+			},{});
+		}
+	}
+	const res2 = new App(users);
+	console.log(res2.getRes);
+
+
+</script>
+</body>
+
+</html>
