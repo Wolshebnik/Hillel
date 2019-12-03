@@ -57,9 +57,10 @@
 		static sortSalary(builder) {
 			return builder.sort((min, max) => min.salary - max.salary);
 		}
-		static maxHours (builder) {
+
+		static maxHours(builder) {
 			return builder.reduce((prev, next) => {
-				if(prev.workingHoursPerDay > next.workingHoursPerDay) return prev;
+				if (prev.workingHoursPerDay > next.workingHoursPerDay) return prev;
 				else next;
 			})
 		}
@@ -72,7 +73,7 @@
 	let maxHours = Builder.maxHours([builder1, builder2, builder3]);
 	console.log(salarySort);
 	console.log(maxHours);
-	
+
 
 	//3) Есть класс App! Который принимает массив с обьектов со свойствами name, country и нужно вернуть обьект с ключами которые являются значениями свойства country где будет массивы с name!
 	// как на уроке одним словом то есть так
@@ -93,14 +94,16 @@
 		constructor(users) {
 			this.users = users;
 		};
-		get getRes (){
+
+		get getRes() {
 			return this.users.reduce((prev, next) => {
-				if (!prev[next.country]) prev[next.country] =[];
+				if (!prev[next.country]) prev[next.country] = [];
 				prev[next.country].push(next.name);
 				return prev;
-			},{});
+			}, {});
 		}
 	}
+
 	const res2 = new App(users);
 	console.log(res2.getRes);
 
