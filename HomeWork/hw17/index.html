@@ -1,0 +1,115 @@
+<html>
+
+<head>
+	<title>JAVASCRIPT</title>
+</head>
+
+<body>
+<script>
+	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+	//1) Задача состоит в следующем! Написать код который отправляет POST запрос со следующим body!
+	var obj = {
+		data: {
+			question: 'How are you?',
+			answer: 'I am good'
+		}
+	};
+	let urlObj = 'http://localhost:3000/obj';
+
+	function reqXML(url) {
+		return new Promise((res, rej) => {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', url);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.send(JSON.stringify(obj));
+			xhr.onload = function () {
+				if (xhr.status === 200) {
+					res(xhr.responseText)
+				}
+			};
+		})
+	}
+
+	reqXML(urlObj).then(data => console.log(JSON.parse(data)));
+
+	async function reqFetch(url) {
+		let response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(obj)
+		});
+		let a = await response.json();
+		console.log(a)
+	}
+
+	reqFetch(urlObj);
+
+	// И расширить серверную часть ниже добавить заголовки чтобы можно было отправить c любого домена и распарсить body и вернуть его!!
+
+
+	// http.createServer((req, res) => {
+	// 	//  Н
+	// 	res.end();
+	// }).listen(3000, '127.0.0.1', () => console.log('Server is listening on port:' + 3000));
+
+	// 2) Отправить запрос исgользуя fetch или xmlhttprequest которой содержит query в url
+	// http://localhost:3000/phones?priceS=7000&priceF=40000&color=black - вот пример, где ?priceS=7000&priceF=40000&color=black -  query
+	// где 7000 - 40000 - диапазон цен, то есть в query фильтр, диапазон 7000 - 40000  и цвет черный
+	// Делаем сервер, НА сервере есть массив с обьектов, использем модуль
+	// const url = require('url')
+	// чтобы распарсить priceS, priceF, color и отдаем отфильтрованный массив phones по этим 3-м критериям, соответственно если поменять диапазон цен или цвет то и
+	// массив уже будет другой, не хардкодим)))
+	const phones = [
+		{
+			name: 'iphone7',
+			price: 14000,
+			color: 'black'
+		},
+		{
+			name: 'iphone8',
+			price: 18000,
+			color: 'white'
+		},
+		{
+			name: 'iphone10',
+			price: 24000,
+			color: 'pink'
+		},
+		{
+			name: 'iphone11',
+			price: 28000,
+			color: 'black'
+		},
+		{
+			name: 'samsung',
+			price: 14000,
+			color: 'black'
+		},
+		{
+			name: 'xiaomi',
+			price: 10000,
+			color: 'black'
+		},
+		{
+			name: 'meizu',
+			price: 8000,
+			color: 'green'
+		},
+		{
+			name: 'huawei',
+			price: 11000,
+			color: 'black'
+		},
+	];
+
+	fetch('http://localhost:3000/phones?priceS=8000&priceF=11000&color=black').then(data => data.json()).then (data => console.log(data));
+	fetch('http://localhost:3000/phones?priceS=14000&priceF=24000&color=black').then(data => data.json()).then (data => console.log(data));
+	fetch('http://localhost:3000/phones?priceS=28000&priceF=40000&color=black').then(data => data.json()).then (data => console.log(data));
+
+</script>
+</body>
+
+</html>
