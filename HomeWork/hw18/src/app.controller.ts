@@ -121,14 +121,14 @@ export class AppController {
     }
 
     @Post('/object')
-    getPostObject(@Body()body:BodyValue) {
+    getPostObject(@Body()body) {
      // запрос post http://localhost:3000/object
-     // body {"value" : 40}
+     // [{"id": 703, "value": 24}, {"id": 702, "value": 14}, {"id": 701, "value": 35}, {"id": 700, "value": 21}, {"id": 698, "value": 51}, {"id": 696, "value": 12}]
       const {parameters, formula} = this.formula;
         const newObject = parameters.reduce((prev:any,next:IParam )=> {
-          return { ...prev,[next.name]:body.value}
+         const newBody = body.find(curr => curr.id === next.id);
+          return { ...prev,[next.name]:newBody.value}
         },{});
-
-        return evaluate(formula,newObject)
+        return evaluate(formula,newObject);
     }
 }
