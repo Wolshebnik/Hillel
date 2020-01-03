@@ -99,15 +99,15 @@ export class AppController {
 
 
     @Get('/:id')
-    getHello(@Param() id: { id: string }): IParam {
+    getHello(@Param() param: { id: string }): IParam {
 
-        return this.formula.parameters.find(curr => curr.id === +id);
+        return this.formula.parameters.find(curr => curr.id === +param.id);
     }
 
     @Delete('/:id')
-    getDelete(@Param() id: { id: string }): Formula {
+    getDelete(@Param() param: { id: string }): Formula {
         //localhost:3000/parameter/703
-        this.formula.parameters = this.formula.parameters.filter(curr => curr.id !== +id);
+        this.formula.parameters = this.formula.parameters.filter(curr => curr.id !== +param.id);
         return this.formula
     }
 
