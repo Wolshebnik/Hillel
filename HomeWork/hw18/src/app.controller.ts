@@ -1,6 +1,6 @@
 import {Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
 import {AppService} from './app.service';
-import {Formula, IParam} from './formula.interface';
+import {Formula, IParam,BodyValue} from './formula.interface';
 import {evaluate} from 'mathjs';
 
 @Controller()
@@ -121,12 +121,13 @@ export class AppController {
     }
 
     @Post('/object')
-    getPostObject(@Body()body) {
+    getPostObject(@Body()body:BodyValue) {
+     // запрос post http://localhost:3000/object
+     // body {"value" : 40}
       const {parameters, formula} = this.formula;
-        const newObject = parameters.reduce((prev:any,next:any )=> {
+        const newObject = parameters.reduce((prev:any,next:IParam )=> {
           return { ...prev,[next.name]:body.value}
         },{});
-        console.log(newObject);
 
         return evaluate(formula,newObject)
     }
