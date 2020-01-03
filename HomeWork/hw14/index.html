@@ -47,12 +47,13 @@
 	//3) Есть класс App! Добавить две функции одна из них устанавливает product(создает поле product обьект с полем name, price), вторая функция получает price
 	// и одно статическое свойство yearOfIssue
 	class App {
+		static yearOfIssue = 3;
+
 		constructor() {
 			this.name;
 			this.price;
 		};
-		static yearOfIssue = 3;
-		
+
 		get getPrice() {
 			return this.price;
 		}
@@ -70,7 +71,7 @@
 	console.log(seller.getPrice);
 
 	// 4) Пишем свой split и join))!
-	String.prototype.mySplit = function(...array) {
+	String.prototype.mySplit = function (...array) {
 		let arr = [];
 		let [value] = array;
 		if (value === undefined) {
@@ -82,7 +83,7 @@
 		}
 		return arr;
 	};
-	
+
 	console.log(('1 2 3 4 5').mySplit());
 	console.log(('12345').mySplit(''));
 	console.log(('1 2 3 4 5').mySplit(' '));
@@ -98,6 +99,7 @@
 				else str += curr;
 			});
 		}
+
 		let [value] = array;
 		if (value === undefined) {
 			iteration(this, ',');
@@ -133,6 +135,7 @@
 
 		return NewApp1;
 	})();
+	
 	NewApp1.prototype.getObject = function () {
 		return this.object;
 	};
