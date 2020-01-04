@@ -1,32 +1,31 @@
 export interface Formula {
-    parameters: IParam [];
-    id: number;
-    uuid: string;
-    createdAt: string;
-    updatedAt: string;
-    name: string;
-    formula: string;
+  parameters: IParam[];
+  id: number;
+  uuid: string;
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+  formula: string;
 }
 
-  export interface IParam {
-    id: number;
-    validation: IValidation,
-    default: string;
-    name: string;
-    label: string;
+export interface IParam {
+  id: number;
+  validation: IValidation;
+  default: string;
+  name: string;
+  label: string;
 }
 
 export interface IValidation {
-    min: number;
-    max: number;
-    required: boolean;
-    readonly : boolean;
-    params: boolean;
-
+  min: number;
+  max: number;
+  required: boolean;
+  readonly: boolean;
+  params: boolean;
 }
 
 export interface BodyValue {
-    value: number;
+  value: number;
 }
 // "parameters": [
 //     {

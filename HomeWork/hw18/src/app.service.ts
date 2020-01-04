@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import {Formula} from  './formula.interface'
+import { Formula } from './formula.interface';
 
 @Injectable()
 export class AppService {
-
   getHello() {
-    return
+    return;
   }
 
   getPost() {
-    return
+    return;
   }
   getDelete() {
-    return
+    return;
   }
 }
