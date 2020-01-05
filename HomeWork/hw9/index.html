@@ -1,125 +1,127 @@
 <html>
+  <head>
+    <title>JAVASCRIPT HW9</title>
+  </head>
 
-<head>
-	<title>JAVASCRIPT HW9</title>
-</head>
+  <body>
+    <script>
+      // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
 
-<body>
-<script>
-	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
-
-	//1) Есть участок кода! обернуть в try catch нужный участок кода и выбросить ошибку если getResult возвращает undefined
-	function getResult() {
-		var obj = {
-			name: 'Sergei',
-			lastName: 'Shakhov'
-		};
-		return
-        obj;
-	}
-
-	let a = getResult();
-	try {
-		if (!a) throw new Error('Error')
-	} catch (e) {
-		a = {
-		    name: 'Andrey',
-            lastName: 'Teslenko'
+      //1) Есть участок кода! обернуть в try catch нужный участок кода и выбросить ошибку если getResult возвращает undefined
+      function getResult() {
+        var obj = {
+          name: "Sergei",
+          lastName: "Shakhov"
         };
-	}
-	console.log('RESULT', a);
+        return;
+        obj;
+      }
 
-	//2) исправить код чтобы консоль логи показывали от 0 до 10, и написать почему сейчас выводит десять десяток!!
-	
-	
-	for (let i = 0; i < 10; i++) { // var глобално, прошлось по циклу и запустило 10 setTimeout и они в event queue к этому времени i = 10 и после как stack  очистился event loop закидывает по очереди из event queue console.log со значением 10
-		setTimeout(() => console.log(i), 0);
-	}
+      let a = getResult();
+      try {
+        if (!a) throw new Error("Error");
+      } catch (e) {
+        a = {
+          name: "Andrey",
+          lastName: "Teslenko"
+        };
+      }
+      console.log("RESULT", a);
 
-	// 3) Есть код!! В какой последовательности выполнится!
-	function getDatas() {
-		return [
-			{
-				name: "Vasia"
-			},
-			{
-				name: "Boria"
-			},
-			{
-				name: "Misha"
-			},
-		]
-	}
+      //2) исправить код чтобы консоль логи показывали от 0 до 10, и написать почему сейчас выводит десять десяток!!
 
-	const res = getDatas();
-	console.log('RES', res); // вывод 1
-	setTimeout(() =>console.log('settimeout1'), 100); //  вывод 5
-	setTimeout(() =>console.log('settimeout'), 10); //  вывод 4
-	console.log('One'); //  вывод 2
-	console.log('two'); // вывод 3
+      for (let i = 0; i < 10; i++) {
+        // var глобално, прошлось по циклу и запустило 10 setTimeout и они в event queue к этому времени i = 10 и после как stack  очистился event loop закидывает по очереди из event queue console.log со значением 10
+        setTimeout(() => console.log(i), 0);
+      }
 
-	// 4) Что выведет alert в setTimeOut
-	setTimeout(function () {
-		alert(i);
-	}, 100);
-	for (var i = 0; i < 1000000; i++) {
-	}
-	// выведет 1000000 потому как setTimeout  ушла в event queue и через 100 млсек ищет i, а i всплыла(глобальна) и равна 1000000 и выводит
+      // 3) Есть код!! В какой последовательности выполнится!
+      function getDatas() {
+        return [
+          {
+            name: "Vasia"
+          },
+          {
+            name: "Boria"
+          },
+          {
+            name: "Misha"
+          }
+        ];
+      }
 
+      const res = getDatas();
+      console.log("RES", res); // вывод 1
+      setTimeout(() => console.log("settimeout1"), 100); //  вывод 5
+      setTimeout(() => console.log("settimeout"), 10); //  вывод 4
+      console.log("One"); //  вывод 2
+      console.log("two"); // вывод 3
 
-	// 5) Есть функция funct! Сделать из нее функцию конструктор которая создает обьект со свойствами name lastName
-	function funct(name, lastName) {
+      // 4) Что выведет alert в setTimeOut
+      setTimeout(function() {
+        alert(i);
+      }, 100);
+      for (var i = 0; i < 1000000; i++) {}
+      // выведет 1000000 потому как setTimeout  ушла в event queue и через 100 млсек ищет i, а i всплыла(глобальна) и равна 1000000 и выводит
+
+      // 5) Есть функция funct! Сделать из нее функцию конструктор которая создает обьект со свойствами name lastName
+      function funct(name, lastName) {
         this.name = name;
         this.last = lastName;
-	}
+      }
 
-	console.log(new funct('Andrey', 'Teslenko'));
-	
-	// 6) Создать функцию конструктор, которая принимает обьект и берет только lastName и position и создает обьект с этих свойств
-	function factory({lastName, position}) {
-		return {
-			name: 'ZINA',
-			lastName,
-			position
-		};
-	}
+      console.log(new funct("Andrey", "Teslenko"));
 
-	console.log(new factory({name: 'Sergei', lastName: 'Shakhov', height: 188, position: 'Software developer'}));
+      // 6) Создать функцию конструктор, которая принимает обьект и берет только lastName и position и создает обьект с этих свойств
+      function factory({ lastName, position }) {
+        return {
+          name: "ZINA",
+          lastName,
+          position
+        };
+      }
 
-	// 7)  Создать функцию конструктор, которая принимает два свойства name, lastName конкатенирует их и сохраняет в замыкании в переменной fullName
-	// random свойства не будет в обьекте ОБРАТИТЕ ВНИМАНИЕ потому что есть return!! Если не было бы return то был бы обьект с одним свойством
-	function factory2(name, lastName) {
-		var fullName= `${name} ${lastName}`;
-		this.random = Math.random();
+      console.log(
+        new factory({
+          name: "Sergei",
+          lastName: "Shakhov",
+          height: 188,
+          position: "Software developer"
+        })
+      );
 
-		return {
-			name: 'ZINA Borisova',
-			getRealName: function () {
-				return fullName;
-			}
-		};
-	}
+      // 7)  Создать функцию конструктор, которая принимает два свойства name, lastName конкатенирует их и сохраняет в замыкании в переменной fullName
+      // random свойства не будет в обьекте ОБРАТИТЕ ВНИМАНИЕ потому что есть return!! Если не было бы return то был бы обьект с одним свойством
+      function factory2(name, lastName) {
+        var fullName = `${name} ${lastName}`;
+        this.random = Math.random();
 
-	
-	let objFactory = new factory2('Andrey', 'Teslenko');
-	console.log(objFactory.getRealName());
+        return {
+          name: "ZINA Borisova",
+          getRealName: function() {
+            return fullName;
+          }
+        };
+      }
 
-	// 8) Есть код! Почему строчка с комментарием покажет {misha: NADUSHA}! Сделать так чтобы a.getObject(); вернул {misha: 'misha'}
-	// то есть должны быть независимые обьекты!!
-	function newFactory(obj) {
-		var object = obj;
-		return {
-			getObject: function () {
-				return {...object};
-			}
-		};
-	}
+      let objFactory = new factory2("Andrey", "Teslenko");
+      console.log(objFactory.getRealName());
 
-	var m = newFactory({misha: 'misha'});
-	var k = m.getObject();
-	k.misha = 'NADUSHA';
-	console.log(m.getObject()); // КОММЕНТАРИЙ!!! покажет NADUSHA
-</script>
-</body>
+      // 8) Есть код! Почему строчка с комментарием покажет {misha: NADUSHA}! Сделать так чтобы a.getObject(); вернул {misha: 'misha'}
+      // то есть должны быть независимые обьекты!!
+      function newFactory(obj) {
+        var object = obj;
+        return {
+          getObject: function() {
+            return { ...object };
+          }
+        };
+      }
 
+      var m = newFactory({ misha: "misha" });
+      var k = m.getObject();
+      k.misha = "NADUSHA";
+      console.log(m.getObject()); // КОММЕНТАРИЙ!!! покажет NADUSHA
+    </script>
+  </body>
 </html>

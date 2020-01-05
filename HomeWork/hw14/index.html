@@ -1,149 +1,144 @@
 <html>
+  <head>
+    <title>JAVASCRIPT</title>
+  </head>
 
-<head>
-	<title>JAVASCRIPT</title>
-</head>
+  <body>
+    <script>
+      // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
 
-<body>
-<script>
-	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+      //1) Есть две функции конструктор! Нужно c помощью prototype сделать second родителем first!
+      function A(name) {
+        this.name = name;
+      }
 
-	//1) Есть две функции конструктор! Нужно c помощью prototype сделать second родителем first!
-	function A(name) {
-		this.name = name;
-	}
+      function B(lastName) {
+        this.lastName = lastName;
+      }
 
-	function B(lastName) {
-		this.lastName = lastName;
-	}
+      // A.prototype =  new B('Shakhov');
+      const first = new A("Sergei");
+      const second = new B("Shakhov");
+      first.__proto__ = second;
 
-	// A.prototype =  new B('Shakhov');
-	const first = new A('Sergei');
-	const second = new B('Shakhov');
-	first.__proto__ = second;
+      console.log(first.name);
+      console.log(first.lastName);
 
-	console.log(first.name);
-	console.log(first.lastName);
+      //2) Создать класс функция конструктор которого принимает два параметра position, salary,
+      // также создать одно private поле positions = ['software developer', 'hr manager', 'project manager'], getter(get функция)!
+      // которая смотрит на поле positions, и если в position есть одно из перечисленных то возвращает true иначе false
+      class NewClass {
+        #positions = ["software developer", "hr manager", "project manager"];
 
-	//2) Создать класс функция конструктор которого принимает два параметра position, salary,
-	// также создать одно private поле positions = ['software developer', 'hr manager', 'project manager'], getter(get функция)!
-	// которая смотрит на поле positions, и если в position есть одно из перечисленных то возвращает true иначе false
-	class NewClass {
-		#positions = ['software developer', 'hr manager', 'project manager'];
+        constructor(position, salary) {
+          this.position = position;
+          this.salary = salary;
+        }
 
-		constructor(position, salary) {
-			this.position = position;
-			this.salary = salary;
-		}
+        get getterPosition() {
+          return this.#positions.includes(this.position);
+        }
+      }
 
-		get getterPosition() {
-			return this.#positions.includes(this.position);
-		}
-	}
+      let newClass = new NewClass("software developer", 2000);
+      console.log(newClass.getterPosition);
 
-	let newClass = new NewClass('software developer', 2000);
-	console.log(newClass.getterPosition);
+      //3) Есть класс App! Добавить две функции одна из них устанавливает product(создает поле product обьект с полем name, price), вторая функция получает price
+      // и одно статическое свойство yearOfIssue
+      class App {
+        static yearOfIssue = 3;
 
-	//3) Есть класс App! Добавить две функции одна из них устанавливает product(создает поле product обьект с полем name, price), вторая функция получает price
-	// и одно статическое свойство yearOfIssue
-	class App {
-		static yearOfIssue = 3;
+        constructor() {
+          this.name;
+          this.price;
+        }
 
-		constructor() {
-			this.name;
-			this.price;
-		};
+        get getPrice() {
+          return this.price;
+        }
 
-		get getPrice() {
-			return this.price;
-		}
+        create(name, price) {
+          this.name = name;
+          this.price = price;
+        }
+      }
 
-		create(name, price) {
-			this.name = name;
-			this.price = price;
+      let seller = new App();
+      seller.create("Andrey", 2000);
+      seller.create("Vasia", 1000);
+      console.log(seller.getPrice);
 
-		}
-	}
+      // 4) Пишем свой split и join))!
+      String.prototype.mySplit = function(...array) {
+        let arr = [];
+        let [value] = array;
+        if (value === undefined) {
+          arr.push(this);
+        } else {
+          for (let i = 0; i < this.length; i++) {
+            if (!(value === this[i])) arr = [...arr, this[i]];
+          }
+        }
+        return arr;
+      };
 
-	let seller = new App();
-	seller.create('Andrey', 2000);
-	seller.create('Vasia', 1000);
-	console.log(seller.getPrice);
+      console.log("1 2 3 4 5".mySplit());
+      console.log("12345".mySplit(""));
+      console.log("1 2 3 4 5".mySplit(" "));
+      console.log("1-2-3-4-5".mySplit("-"));
 
-	// 4) Пишем свой split и join))!
-	String.prototype.mySplit = function (...array) {
-		let arr = [];
-		let [value] = array;
-		if (value === undefined) {
-			arr.push(this);
-		} else {
-			for (let i = 0; i < this.length; i++) {
-				if (!(value === this[i])) arr = [...arr, this[i]]
-			}
-		}
-		return arr;
-	};
+      Array.prototype.myJoin = function(...array) {
+        let str = "";
 
-	console.log(('1 2 3 4 5').mySplit());
-	console.log(('12345').mySplit(''));
-	console.log(('1 2 3 4 5').mySplit(' '));
-	console.log(('1-2-3-4-5').mySplit('-'));
+        function iteration(arr, value) {
+          arr.forEach((curr, index) => {
+            if (!(arr.length === index + 1)) str += `${curr}${value}`;
+            else str += curr;
+          });
+        }
 
+        let [value] = array;
+        if (value === undefined) {
+          iteration(this, ",");
+        } else if (value === "") {
+          iteration(this, "");
+        } else {
+          iteration(this, value);
+        }
 
-	Array.prototype.myJoin = function (...array) {
-		let str = '';
+        return str;
+      };
 
-		function iteration(arr, value) {
-			arr.forEach((curr, index) => {
-				if (!(arr.length === index + 1)) str += `${curr}${value}`;
-				else str += curr;
-			});
-		}
+      console.log([1, 2, 3, 4, 5].myJoin());
+      console.log([1, 2, 3, 4, 5].myJoin(""));
+      console.log([1, 2, 3, 4, 5].myJoin(" "));
+      console.log([1, 2, 3, 4, 5].myJoin("___"));
 
-		let [value] = array;
-		if (value === undefined) {
-			iteration(this, ',');
-		} else if (value === '') {
-			iteration(this, '');
-		} else {
-			iteration(this, value)
-		}
+      // 5) Ну и на последок перепишем класс в вид самовыз функция которая возвращает функцию-конструктор
+      class NewApp {
+        constructor(object) {
+          this.object = object;
+        }
 
-		return str;
-	};
+        getObject() {
+          return this.object;
+        }
+      }
 
-	console.log([1, 2, 3, 4, 5].myJoin());
-	console.log([1, 2, 3, 4, 5].myJoin(''));
-	console.log([1, 2, 3, 4, 5].myJoin(' '));
-	console.log([1, 2, 3, 4, 5].myJoin('___'));
+      let NewApp1 = (function() {
+        function NewApp1(object) {
+          this.object = object;
+        }
 
-	// 5) Ну и на последок перепишем класс в вид самовыз функция которая возвращает функцию-конструктор
-	class NewApp {
-		constructor(object) {
-			this.object = object;
-		}
+        return NewApp1;
+      })();
 
-		getObject() {
-			return this.object;
-		}
-	}
+      NewApp1.prototype.getObject = function() {
+        return this.object;
+      };
 
-	let NewApp1 = (function () {
-		function NewApp1(object) {
-			this.object = object;
-		}
-
-		return NewApp1;
-	})();
-	
-	NewApp1.prototype.getObject = function () {
-		return this.object;
-	};
-
-	let newApp1 = new NewApp1({name: 'Andrey'});
-	console.log(newApp1.getObject());
-
-</script>
-</body>
-
+      let newApp1 = new NewApp1({ name: "Andrey" });
+      console.log(newApp1.getObject());
+    </script>
+  </body>
 </html>

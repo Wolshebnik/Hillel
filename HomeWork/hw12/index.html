@@ -1,159 +1,158 @@
 <html>
+  <head>
+    <title>JAVASCRIPT HW12</title>
+  </head>
 
-<head>
-	<title>JAVASCRIPT HW12</title>
-</head>
+  <body>
+    <script>
+      // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
 
-<body>
-<script>
-	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+      //1) Есть функция, которая может принять неограниченное количество аргументов'-', '65', 'a', 'p', реализуйте ее так, что бы она находила дефиз и возвращала '65-a-p'
+      function getString(...arr) {
+        let arr1 = [];
+        arr.forEach(curr => {
+          if (curr !== "-") arr1 = [...arr1, curr];
+        });
+        return arr1.myJoin("-");
+      }
 
+      console.log(getString("-", "65", "a", "p")); // 65-a-p
+      console.log(getString("75", "-", "ad", "hg", "543")); // 75-ad-hg-543
 
-	//1) Есть функция, которая может принять неограниченное количество аргументов'-', '65', 'a', 'p', реализуйте ее так, что бы она находила дефиз и возвращала '65-a-p'
-	function getString(...arr) {
-		let arr1 = [];
-		arr.forEach(curr => {
-			if (curr !== '-') arr1 = [...arr1, curr]
-		});
-		return arr1.myJoin('-');
+      //2)  Перехватит ли catch здесь ошибку
+      new Promise((resolve, reject) => {
+        resolve("dffsd");
+      })
+        .then(vasia => {
+          var df = dfdf; //  ошибка вот она синтаксическая! перехватит
+          return 3423;
+        })
+        .catch(e => console.log("fdsfd", e));
 
-	}
+      // или здесь
+      new Promise((resolve, reject) => {
+        resolve("dffsd");
+      })
+        .then(vasia => {
+          throw new Error("new errror"); // вот явно бросаем ошибку
+          return 3423;
+        })
+        .catch(e => console.log("fdsfd", e));
 
-	console.log(getString('-', '65', 'a', 'p')); // 65-a-p
-	console.log(getString('75', '-', 'ad', 'hg', '543')); // 75-ad-hg-543
+      // 3) Взял с проекта код!! Нужно всего лишь переписать на async await :) Запускать не нужно ибо не сработает), просто переписать а я посмотрю!
+      let uploadedImage = "_.jpg";
 
-	//2)  Перехватит ли catch здесь ошибку
-	new Promise((resolve, reject) => {
-		resolve('dffsd')
-	}).then((vasia) => {
-		var df = dfdf; //  ошибка вот она синтаксическая! перехватит
-		return 3423;
-	})
-	.catch((e) => console.log('fdsfd', e));
+      async function pickImage() {
+        let context = imagepicker.create({
+          mode: "single"
+        });
+        let authorize = await context.authorize();
 
-	// или здесь
-	new Promise((resolve, reject) => {
-		resolve('dffsd')
-	}).then((vasia) => {
-		throw new Error('new errror'); // вот явно бросаем ошибку
-		return 3423;
-	})
-	.catch((e) => console.log('fdsfd', e));
-	
-	// 3) Взял с проекта код!! Нужно всего лишь переписать на async await :) Запускать не нужно ибо не сработает), просто переписать а я посмотрю!
-	let uploadedImage = '_.jpg';
+        // .then((selection) => {
+        // 	selection.forEach((selected) => {
+        // 		uploadedImage = selected;
+        // 		cropImage();
+        // 	});
+        // });
 
-	async function pickImage() {
-		let context = imagepicker.create({
-			mode: 'single'
-		});
-		let authorize = await context.authorize();
-		
-		// .then((selection) => {
-		// 	selection.forEach((selected) => {
-		// 		uploadedImage = selected;
-		// 		cropImage();
-		// 	});
-		// });
+        let selection = await context.present();
 
-		let selection = await context.present();
+        selection.forEach(selected => {
+          uploadedImage = selected;
+          cropImage();
+        });
+      }
 
-		selection.forEach((selected) => {
-			uploadedImage = selected;
-			cropImage();
-		});
-	}
+      /**
+       * Takes camera photo
+       */
+      async function takePhoto() {
+        let requestPermissions = await camera.requestPermissions();
 
-	/**
-	 * Takes camera photo
-	 */
-	 async function takePhoto() {
-		let requestPermissions = await camera.requestPermissions();
-		
-		let imageAsset  = await camera.takePicture();
-		uploadedImage = imageAsset;
-		cropImage();
-	}
+        let imageAsset = await camera.takePicture();
+        uploadedImage = imageAsset;
+        cropImage();
+      }
 
-	/**
-	 * Crops picture
-	 */
-	async function cropImage() {
-		let source = new imageSource.ImageSource();
-		source.fromAsset(this.uploadedImage).then(source => {
-			this.imageCropper
-			.show(source, cropOptions)
-			.then(args => {
-				if (args.image !== null) {
-					savePictureToFile(args.image);
-				}
-			});
-		});
-		source = await source.fromAsset(this.uploadedImage);
-		
-		let args = await this.imageCropper.show(source, cropOptions);
-		if (args.image !== null) {
-			savePictureToFile(args.image);
-		}
-	}
+      /**
+       * Crops picture
+       */
+      async function cropImage() {
+        let source = new imageSource.ImageSource();
+        source.fromAsset(this.uploadedImage).then(source => {
+          this.imageCropper.show(source, cropOptions).then(args => {
+            if (args.image !== null) {
+              savePictureToFile(args.image);
+            }
+          });
+        });
+        source = await source.fromAsset(this.uploadedImage);
 
-	/**
-	 * Crops picture
-	 */
-	function savePictureToFile(image) {
-		const folder = fs.knownFolders.documents();
-		const path = fs.path.join(folder.path, "Temp" + Date.now() + ".png");
-		const saved = image.saveToFile(path, "png");
-		if (saved) {
-			this.currentImage = image;
-			this.pictureSelected.emit(path);
-		}
-	}
+        let args = await this.imageCropper.show(source, cropOptions);
+        if (args.image !== null) {
+          savePictureToFile(args.image);
+        }
+      }
 
-	function cropOptions() {
-		return isAndroid ? {
-			width: 512,
-			height: 512
-		} : {
-			lockSquare: true
-		};
-	}
+      /**
+       * Crops picture
+       */
+      function savePictureToFile(image) {
+        const folder = fs.knownFolders.documents();
+        const path = fs.path.join(folder.path, "Temp" + Date.now() + ".png");
+        const saved = image.saveToFile(path, "png");
+        if (saved) {
+          this.currentImage = image;
+          this.pictureSelected.emit(path);
+        }
+      }
 
-	pickImage()
+      function cropOptions() {
+        return isAndroid
+          ? {
+              width: 512,
+              height: 512
+            }
+          : {
+              lockSquare: true
+            };
+      }
 
-	// 4) И закрепляем промисы
-	// https://playwithpromise.herokuapp.com/api/order-review/last -
+      pickImage();
 
-	let newPromise = new Promise((res, rej) => {
-		setTimeout(() => {
-			// вернуть строку https://playwithpromise.herokuapp.com/api/order-review/last через 3 секунды и только тогда сделать запрос по этой строке!
+      // 4) И закрепляем промисы
+      // https://playwithpromise.herokuapp.com/api/order-review/last -
 
-			var Req = new XMLHttpRequest();
-			Req.open("GET", `https://playwithpromise.herokuapp.com/api/order-review/last`);
-			Req.send();
-			Req.onload = function () {
-				if (!this.responseText) rej('BYE');
-				res(JSON.parse(this.responseText));
-			}
-		}, 3000);
-	});
+      let newPromise = new Promise((res, rej) => {
+        setTimeout(() => {
+          // вернуть строку https://playwithpromise.herokuapp.com/api/order-review/last через 3 секунды и только тогда сделать запрос по этой строке!
 
-	newPromise.then(data => console.log('Promise', data));
+          var Req = new XMLHttpRequest();
+          Req.open(
+            "GET",
+            `https://playwithpromise.herokuapp.com/api/order-review/last`
+          );
+          Req.send();
+          Req.onload = function() {
+            if (!this.responseText) rej("BYE");
+            res(JSON.parse(this.responseText));
+          };
+        }, 3000);
+      });
 
-	// 5) Ну и последнее так уже чтобы расслабиться)! Пишем свой собственный push!!
-	let arrayMy = [];
-	Array.prototype.myPush = function (...array) {
-		array.forEach(curr => this[this.length] = curr);
-		return this;
+      newPromise.then(data => console.log("Promise", data));
 
-	};
-	arrayMy.myPush(5, 7, 8, 3, 45, 435);
-	arrayMy.myPush(5, 7, 8);
-	arrayMy.myPush('last');
+      // 5) Ну и последнее так уже чтобы расслабиться)! Пишем свой собственный push!!
+      let arrayMy = [];
+      Array.prototype.myPush = function(...array) {
+        array.forEach(curr => (this[this.length] = curr));
+        return this;
+      };
+      arrayMy.myPush(5, 7, 8, 3, 45, 435);
+      arrayMy.myPush(5, 7, 8);
+      arrayMy.myPush("last");
 
-	console.log(arrayMy);
-
-</script>
-</body>
-
+      console.log(arrayMy);
+    </script>
+  </body>
 </html>

@@ -2,19 +2,18 @@
 // const mongoose: any = require('mongoose');
 import * as mongoose from 'mongoose';
 
+
 export const studentSchema: any = new mongoose.Schema({
     name: String,
     lastName: String,
-    group: Number,
-    school: Number,
+    groupID: String
 });
 
 // tslint:disable-next-line:interface-name
 export interface Student {
     readonly name: string;
     readonly lastName: string;
-    readonly group: number;
-    readonly school: number;
+    readonly groupID: string;
 }
 
 export interface ITicket extends Document, Student {

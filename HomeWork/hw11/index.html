@@ -1,87 +1,83 @@
 <html>
+  <head>
+    <title>JAVASCRIPT hw11</title>
+  </head>
 
-<head>
-	<title>JAVASCRIPT hw11</title>
-</head>
+  <body>
+    <script>
+      // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
 
-<body>
-<script>
-	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+      //1) Есть код ! с помощью async await реализуем правильную последовательность!!
+      let pr1 = new Promise((res, rej) => {
+        setTimeout(() => res("1"), 1300);
+      });
+      let pr2 = new Promise((res, rej) => {
+        res("2");
+      });
+      let pr3 = new Promise((res, rej) => {
+        res("3");
+      });
+      let pr4 = new Promise((res, rej) => {
+        setTimeout(() => res("4"), 300);
+      });
+      let pr5 = new Promise((res, rej) => {
+        res("5");
+      });
 
+      async function outConsole() {
+        let one = await pr1;
+        let two = await pr2;
+        let three = await pr3;
+        let four = await pr4;
+        let five = await pr5;
 
-	//1) Есть код ! с помощью async await реализуем правильную последовательность!!
-	let pr1 = new Promise((res, rej) => {
-		setTimeout(() => res('1'), 1300);
-	});
-	let pr2 = new Promise((res, rej) => {
-		res('2');
-	});
-	let pr3 = new Promise((res, rej) => {
-		res('3');
-	});
-	let pr4 = new Promise((res, rej) => {
-		setTimeout(() => res('4'), 300);
-	});
-	let pr5 = new Promise((res, rej) => {
-		res('5');
-	});
+        console.log(one);
+        console.log(two);
+        console.log(three);
+        console.log(four);
+        console.log(five);
+      }
 
+      outConsole();
 
-	async function outConsole() {
-		let one = await pr1;
-		let two = await pr2;
-		let three = await pr3;
-		let four = await pr4;
-		let five = await pr5;
-		
-		console.log(one);
-		console.log(two);
-		console.log(three);
-		console.log(four);
-		console.log(five);
-	}
+      // 2) Есть роуты!! Делаем через async await то что в предыдущей!
+      // https://playwithpromise.herokuapp.com/api/order-review/last - вернет обьект с id такой( 5dcb2558526eb500173b129d )
+      // после чего используя id делаем другой запрос
+      // https://playwithpromise.herokuapp.com/api/order-review/getid/{id}
+      // https://playwithpromise.herokuapp.com/api/order-system/product/{productId}
 
-	outConsole();
+      let urlLast =
+        "https://playwithpromise.herokuapp.com/api/order-review/last";
+      let urlGetId =
+        "https://playwithpromise.herokuapp.com/api/order-review/getid/";
+      let urlProduct =
+        "https://playwithpromise.herokuapp.com/api/order-system/product/";
 
+      function getList(url, str) {
+        return new Promise((res, rej) => {
+          var Req = new XMLHttpRequest();
+          Req.open("GET", `${url}${str}`);
+          Req.send();
+          Req.onload = function() {
+            if (!this.responseText) rej("BYE");
+            res(JSON.parse(this.responseText));
+          };
+        });
+      }
 
-	// 2) Есть роуты!! Делаем через async await то что в предыдущей!
-	// https://playwithpromise.herokuapp.com/api/order-review/last - вернет обьект с id такой( 5dcb2558526eb500173b129d )
-	// после чего используя id делаем другой запрос
-	// https://playwithpromise.herokuapp.com/api/order-review/getid/{id}
-	// https://playwithpromise.herokuapp.com/api/order-system/product/{productId}
+      async function launch() {
+        let firstRequest = await getList(urlLast, "");
+        let { _id: id } = firstRequest;
+        let secondRequest = await getList(urlGetId, id);
+        let { orderList } = secondRequest;
+        let [getProductId1, getProductId2] = orderList;
+        let thirdRequest = await getList(urlProduct, getProductId1.productId);
+        let forthRequest = await getList(urlProduct, getProductId2.productId);
+        console.log(thirdRequest);
+        console.log(forthRequest);
+      }
 
-	let urlLast = 'https://playwithpromise.herokuapp.com/api/order-review/last';
-	let urlGetId = 'https://playwithpromise.herokuapp.com/api/order-review/getid/';
-	let urlProduct = 'https://playwithpromise.herokuapp.com/api/order-system/product/';
-
-	function getList(url, str) {
-		return new Promise((res, rej) => {
-			var Req = new XMLHttpRequest();
-			Req.open("GET", `${url}${str}`);
-			Req.send();
-			Req.onload = function () {
-				if (!this.responseText) rej('BYE');
-				res(JSON.parse(this.responseText));
-			}
-		});
-	}
-
-	async function launch() {
-		let firstRequest = await getList(urlLast, '');
-		let {_id: id} = firstRequest;
-		let secondRequest = await getList(urlGetId, id);
-		let {orderList} = secondRequest;
-		let [getProductId1, getProductId2] = orderList;
-		let thirdRequest = await getList(urlProduct, getProductId1.productId);
-		let forthRequest = await getList(urlProduct, getProductId2.productId);
-		console.log(thirdRequest);
-		console.log(forthRequest);
-	}
-
-	launch();
-
-
-</script>
-</body>
-
+      launch();
+    </script>
+  </body>
 </html>

@@ -6,4 +6,4 @@ export const studentProvider: any =
     provide: 'StudentModelToken',
     useFactory: (connection: Connection): Model<Document> => connection.model('StudentModel', studentSchema),
     inject: ['DbConnectionToken'],
-  }
+  };

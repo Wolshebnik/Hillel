@@ -1,188 +1,222 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>JAVASCRIPT HW7</title>
+  </head>
 
-<head>
-	<meta charset="UTF-8">
-	<title>JAVASCRIPT HW7</title>
-</head>
+  <body>
+    <script>
+      // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
 
-<body>
-<script>
-	// ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+      //1) Есть обьект car! пробежаться по обьекту через for in и подсчитать количество свойств в обьекте,
+      const car = {
+        model: "BMW",
+        price: 45000,
+        year: 2019,
+        country: "Germany"
+      };
+      let count = 0;
+      for (let key in car) {
+        count++;
+      }
+      console.log(
+        "Есть обьект car! пробежаться по обьекту через for in и подсчитать количество свойств в обьекте"
+      );
+      console.log(count);
 
-	//1) Есть обьект car! пробежаться по обьекту через for in и подсчитать количество свойств в обьекте,
-	const car = {
-		model: 'BMW',
-		price: 45000,
-		year: 2019,
-		country: 'Germany'
-	};
-	let count = 0;
-	for (let key in car) {
-		count++;
-	}
-	console.log('Есть обьект car! пробежаться по обьекту через for in и подсчитать количество свойств в обьекте');
-	console.log(count);
+      // 2) Есть функция getClaims которая прнимает массив из обьектов claims! Фунция должна вернуть массив только из тех
+      // которые  имеют status Closed
+      let claims = [
+        {
+          id: 1234,
+          model: "MC7",
+          status: "Open"
+        },
+        {
+          id: 3453,
+          model: "MC7",
+          status: "Open"
+        },
+        {
+          id: 6343,
+          model: "Gran Tour",
+          status: "Closed"
+        },
+        {
+          id: 7644,
+          status: "In Progress"
+        },
+        {
+          id: 7686,
+          model: "City Bike",
+          status: "Closed"
+        },
+        {
+          id: 8356,
+          model: "Bike",
+          status: "Closed"
+        },
+        {
+          id: 9745,
+          model: "Bicycle",
+          status: "Closed"
+        },
+        {
+          id: 10253,
+          model: "Bicycle",
+          status: "Closed"
+        },
+        {
+          id: 14234,
+          model: "Bike",
+          status: "Closed"
+        }
+      ];
 
-	// 2) Есть функция getClaims которая прнимает массив из обьектов claims! Фунция должна вернуть массив только из тех
-	// которые  имеют status Closed
-	let claims = [
-		{
-			id: 1234,
-			model: 'MC7',
-			status: 'Open'
-		},
-		{
-			id: 3453,
-			model: 'MC7',
-			status: 'Open'
-		},
-		{
-			id: 6343,
-			model: 'Gran Tour',
-			status: 'Closed'
-		},
-		{
-			id: 7644,
-			status: 'In Progress'
-		},
-		{
-			id: 7686,
-			model: 'City Bike',
-			status: 'Closed'
-		},
-		{
-			id: 8356,
-			model: 'Bike',
-			status: 'Closed'
-		},
-		{
-			id: 9745,
-			model: 'Bicycle',
-			status: 'Closed'
-		},
-		{
-			id: 10253,
-			model: 'Bicycle',
-			status: 'Closed'
-		},
-		{
-			id: 14234,
-			model: 'Bike',
-			status: 'Closed'
-		}];
-
-	function getClaims(arr) {
-		return arr.reduce((prev, curr) => {
-			if (curr.status === 'Closed') return [...prev, curr];
-			else return prev;
-		}, []);
-		/* let arr1 = [];
+      function getClaims(arr) {
+        return arr.reduce((prev, curr) => {
+          if (curr.status === "Closed") return [...prev, curr];
+          else return prev;
+        }, []);
+        /* let arr1 = [];
 		 arr.forEach(item => {
 			if (item.status === 'Closed') arr1 = [...arr1, item];
 		});
 		return arr1; */
-	}
+      }
 
-	console.log('Есть функция getClaims которая прнимает массив из обьектов claims! Фунция должна вернуть массив только из тех которые  имеют status Closed');
-	console.log(getClaims(claims));
+      console.log(
+        "Есть функция getClaims которая прнимает массив из обьектов claims! Фунция должна вернуть массив только из тех которые  имеют status Closed"
+      );
+      console.log(getClaims(claims));
 
-	//3) Дан массив arr! Необходимо найти самое большое по модулю!!! Решить минимум 2-мя способами!!
-	const arr = [5, 6, 23, 64, -23, -92, 23, 3];
-	
-	let max = 0;
-	for (let i = 0; i < arr.length; i++) {
-		if (Math.abs(arr[i]) > max) max = Math.abs(arr[i]);
-	}
-	console.log('Необходимо найти самое большое по модулю!!! Решить минимум 2-мя способами!! ');
-	console.log(max);
-	
-	let arr11 = arr.reduce((prev, curr) => Math.abs(prev) > Math.abs(curr) ? Math.abs(prev) : Math.abs(curr));
-	
-	console.log('Необходимо найти самое большое по модулю!!! Решить минимум 2-мя способами!! ');
-	console.log(arr11);
+      //3) Дан массив arr! Необходимо найти самое большое по модулю!!! Решить минимум 2-мя способами!!
+      const arr = [5, 6, 23, 64, -23, -92, 23, 3];
 
-	// 4) Используя claims переменную выше!! добавить свойство isClosed: true если status - Closed
+      let max = 0;
+      for (let i = 0; i < arr.length; i++) {
+        if (Math.abs(arr[i]) > max) max = Math.abs(arr[i]);
+      }
+      console.log(
+        "Необходимо найти самое большое по модулю!!! Решить минимум 2-мя способами!! "
+      );
+      console.log(max);
 
-	function addClaims(arr) {
-		return arr.reduce((prev, curr) => {
-			if (curr.status === 'Closed') {
-				curr.isClosed = true;
-				return [...prev, curr];
-			} else return prev;
-		}, []);
-	}
+      let arr11 = arr.reduce((prev, curr) =>
+        Math.abs(prev) > Math.abs(curr) ? Math.abs(prev) : Math.abs(curr)
+      );
 
-	console.log('Используя claims переменную выше!! добавить свойство isClosed: true если status - Closed');
-	console.log(addClaims(claims));
+      console.log(
+        "Необходимо найти самое большое по модулю!!! Решить минимум 2-мя способами!! "
+      );
+      console.log(arr11);
 
+      // 4) Используя claims переменную выше!! добавить свойство isClosed: true если status - Closed
 
-	// 5)  Есть массив arr1 отсортировать этот вложенный массив [5, 1, 7,3 ,4, 6]
-	const arr1 = [[5, 2, 5, 1, [5, 1, 7, 3, 4, 6]], 6, 23, 64, -23, -92, 23, 3];
-	arr1.forEach(item => {
-		if (Array.isArray(item)) {
-			 [,,,,[...num]] = item ;
-			 num.sort((a, b) => a - b);
-			 
-			 console.log('Есть массив arr1 отсортировать этот вложенный массив [5, 1, 7,3 ,4, 6]');
-			 console.log(...num)
-		}
-	});
-	
-	
+      function addClaims(arr) {
+        return arr.reduce((prev, curr) => {
+          if (curr.status === "Closed") {
+            curr.isClosed = true;
+            return [...prev, curr];
+          } else return prev;
+        }, []);
+      }
 
-	// 6)  Есть массив arr2 разложить положительные в один массив а отрицательные в другой!!
-	const arr2 = [5, 2, 5, -1, 6, -3, 64, -23, -92, 23, 3];
-	let positiveArr = [];
-	let negativeArr = [];
+      console.log(
+        "Используя claims переменную выше!! добавить свойство isClosed: true если status - Closed"
+      );
+      console.log(addClaims(claims));
 
-	arr2.forEach(item => (item > 0) ? positiveArr = [...positiveArr, item] : negativeArr = [...negativeArr, item]);
-	
-	console.log('Есть массив arr2 разложить положительные в один массив а отрицательные в другой!!');
-	console.log(positiveArr);
-	console.log(negativeArr);
+      // 5)  Есть массив arr1 отсортировать этот вложенный массив [5, 1, 7,3 ,4, 6]
+      const arr1 = [
+        [5, 2, 5, 1, [5, 1, 7, 3, 4, 6]],
+        6,
+        23,
+        64,
+        -23,
+        -92,
+        23,
+        3
+      ];
+      arr1.forEach(item => {
+        if (Array.isArray(item)) {
+          [, , , , [...num]] = item;
+          num.sort((a, b) => a - b);
 
-	//7 Написать функцию которая принимает только поле array обьекта person и сортирует по убыванию по id и возвращает массив!!
-	const person = {
-		name: 'Vasia',
-		gender: 'male',
-		array: [{id: 1, name: 'Vasia'}, {id: 6, name: 'Boria'}, {id: 2, name: 'Petia'}, {id: 3, name: 'Misha'}]
-	};
+          console.log(
+            "Есть массив arr1 отсортировать этот вложенный массив [5, 1, 7,3 ,4, 6]"
+          );
+          console.log(...num);
+        }
+      });
 
-	function getPerson({array}/* деструтуризируем*/) {
-		return array.sort((prev, next) => prev.id - next.id)
-	}
+      // 6)  Есть массив arr2 разложить положительные в один массив а отрицательные в другой!!
+      const arr2 = [5, 2, 5, -1, 6, -3, 64, -23, -92, 23, 3];
+      let positiveArr = [];
+      let negativeArr = [];
 
-	console.log('Написать функцию которая принимает только поле array обьекта person и сортирует по убыванию по id и возвращает массив!!');
-	console.log(getPerson(person));
+      arr2.forEach(item =>
+        item > 0
+          ? (positiveArr = [...positiveArr, item])
+          : (negativeArr = [...negativeArr, item])
+      );
 
-	//8 Написать функцию которая принимает массив arr3! И если среднее арифметическое всех меньше самого большого числа в массиве вернуть тру иначе фолс!!!
-	const arr3 = [5, 2, 5, -1, 6, 3, 64, 23, -92, 23, 3];
+      console.log(
+        "Есть массив arr2 разложить положительные в один массив а отрицательные в другой!!"
+      );
+      console.log(positiveArr);
+      console.log(negativeArr);
 
-	function average(arr) {
-		let sum = arr.reduce((prev, next) => prev + next);
-		let max = arr.reduce((prev, next) => prev > next ? prev : next);
-		return (sum / arr3.length < max);
-	}
+      //7 Написать функцию которая принимает только поле array обьекта person и сортирует по убыванию по id и возвращает массив!!
+      const person = {
+        name: "Vasia",
+        gender: "male",
+        array: [
+          { id: 1, name: "Vasia" },
+          { id: 6, name: "Boria" },
+          { id: 2, name: "Petia" },
+          { id: 3, name: "Misha" }
+        ]
+      };
 
-	console.log('Написать функцию которая принимает массив arr3! И если среднее арифметическое всех меньше самого большого числа в массиве вернуть тру иначе фолс!!!');
-	console.log(average(arr3));
+      function getPerson({ array } /* деструтуризируем*/) {
+        return array.sort((prev, next) => prev.id - next.id);
+      }
 
-	//9 Есть обьект claim вернуть конкатенация modelName, subject!
-	const claim = {
-		id: 542354,
-		subject: 'Bike',
-		modelName: 'Mc7',
-		modelId: 3213,
-		getModelNameAndSubject: function() {
-			// вернуть modelName, subject
-			return `${this.modelName} ${this.subject}`;
-		}
-	};
-	
-	console.log('Есть обьект claim вернуть конкатенация modelName, subject!');
-	console.log(claim.getModelNameAndSubject());
-</script>
-</body>
+      console.log(
+        "Написать функцию которая принимает только поле array обьекта person и сортирует по убыванию по id и возвращает массив!!"
+      );
+      console.log(getPerson(person));
 
+      //8 Написать функцию которая принимает массив arr3! И если среднее арифметическое всех меньше самого большого числа в массиве вернуть тру иначе фолс!!!
+      const arr3 = [5, 2, 5, -1, 6, 3, 64, 23, -92, 23, 3];
+
+      function average(arr) {
+        let sum = arr.reduce((prev, next) => prev + next);
+        let max = arr.reduce((prev, next) => (prev > next ? prev : next));
+        return sum / arr3.length < max;
+      }
+
+      console.log(
+        "Написать функцию которая принимает массив arr3! И если среднее арифметическое всех меньше самого большого числа в массиве вернуть тру иначе фолс!!!"
+      );
+      console.log(average(arr3));
+
+      //9 Есть обьект claim вернуть конкатенация modelName, subject!
+      const claim = {
+        id: 542354,
+        subject: "Bike",
+        modelName: "Mc7",
+        modelId: 3213,
+        getModelNameAndSubject: function() {
+          // вернуть modelName, subject
+          return `${this.modelName} ${this.subject}`;
+        }
+      };
+
+      console.log("Есть обьект claim вернуть конкатенация modelName, subject!");
+      console.log(claim.getModelNameAndSubject());
+    </script>
+  </body>
 </html>
