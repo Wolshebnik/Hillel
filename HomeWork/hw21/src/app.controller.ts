@@ -1,13 +1,25 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
-import { IFormula, IParam, BodyValue } from './formula.interface';
-import { evaluate } from 'mathjs';
+import { IPerson } from './interfaces/person.interface';
+import { IApp } from './interfaces/app-controller.interface';
+import { IFormula } from './interfaces/formula.interface';
 
-@Controller()
-export class AppController {
+@Controller('api')
+export class AppController implements IApp {
+  num: IPerson;
   formula: IFormula;
 
-  constructor(private appService: AppService) {
+  constructor(private readonly appService: AppService) {
+    const person = { name: 'Vasia' };
+    this.num = {
+      id: 23,
+      name: 'Vasia',
+      age: 34,
+      lastName: '432',
+      children: {
+        kidName: 'string',
+      },
+    };
     this.formula = {
       parameters: [
         {
@@ -97,38 +109,33 @@ export class AppController {
       formula:
         'round(OP * (H * W * T) / 1000 / 1000 * (100 - FILL) / 100 / 2.1 * (100 + WF) / 100, 1)',
     };
+
+    //  num = '3243';
   }
 
-  @Get('/get')
-  getHello(): IFormula {
-    return this.formula;
+  @Get('/all')
+  getAll1(): IPerson {
+    return this.num;
   }
 
-  // @ts-ignore
-  // @ts-ignore
-  @Post('/post')
-  async getPost(@Body() body: IParam): Promise<IFormula> {
-    this.formula.parameters.push(body);
-    return this.formula
+  getHello(): string {
+    return '';
   }
 
-  @Delete('/delete/:id')
-  getDel(@Param() param):IParam[] {
-    //запрос delete http://localhost:3000/delete/696
-    return this.formula.parameters.filter(arr => arr.id !== +param.id);
+  getStudent(): string {
+    return '';
   }
 
-  @Post('/object')
-  getPostObject(@Body() body: BodyValue[]): number {
-    // запрос post http://localhost:3000/object
-    // body [{"id": 703, "value": 24}, {"id": 702, "value": 14}, {"id": 701, "value": 35}, {"id": 700, "value": 21}, {"id": 698,
-    // "value": 51}, {"id": 696, "value": 12}]
-    const { parameters, formula } = this.formula;
-    const newObject = parameters.reduce((prev: {}, next: IParam) => {
-      const newBody = body.find(curr => curr.id === next.id);
-      return { ...prev, [next.name]: newBody.value };
-    }, {});
-
-    return evaluate(formula, newObject);
+  @Post('/all/:id/post') // localhost:3000/all/:id/post
+  postAll(
+    @Body() body: { person: IPerson },
+    @Param() id: { id: number },
+    @Query() query: { name: string; age: number },
+  ) {
+    return {
+      ...body.person,
+      id: id.id,
+      query,
+    };
   }
 }
