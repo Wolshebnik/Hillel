@@ -16,4 +16,9 @@ export class GroupController {
   async searchGroup():Promise<IGetGroup>  {
     return await this.groupService.searchGroup();
   }
+
+  @Get('search/:id')
+  async getStudent(@Param() data: { id: string }): Promise<IGetGroup> {
+    return await this.groupService.getGroupById(data.id);
+  }
 }

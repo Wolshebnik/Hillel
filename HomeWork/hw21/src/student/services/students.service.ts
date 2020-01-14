@@ -1,13 +1,11 @@
 import { Model } from 'mongoose';
 import { Inject, Injectable } from '@nestjs/common';
-import { TestClass } from './test.service';
 import { IStudent } from '../schemas/student.schema';
 
 @Injectable()
 export class StudentService {
   constructor(
     @Inject('StudentModelToken') private readonly studentModel: Model<IStudent>,
-    public testClass: TestClass,
   ) {}
 
   async createStudent(student: IStudent): Promise<IStudent> {

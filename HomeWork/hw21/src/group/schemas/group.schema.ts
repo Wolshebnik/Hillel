@@ -1,15 +1,14 @@
-
 import * as mongoose from 'mongoose';
+import { ObjectId } from 'mongoose';
 
 export const groupSchema: any = new mongoose.Schema({
   name: String,
-  teacher: String,
+  teacherId: ObjectId,
 });
 
-// tslint:disable-next-line:interface-name
 export interface Group {
   readonly name: string;
-  readonly teacher: string;
+  readonly teacher: ObjectId;
 }
 
 export interface IGroup extends Document, Group {}

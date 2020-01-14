@@ -12,7 +12,7 @@ export class StudentController {
   }
 
   @Get('all')
-  async setStudentAll():Promise<IStudent[]> {
+  async getStudentAll():Promise<IStudent[]> {
     return await this.studentService.getAllStudent();
   }
 

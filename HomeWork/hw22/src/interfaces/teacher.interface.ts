@@ -1,8 +1,9 @@
 import {ObjectId} from 'mongoose';
 import {IStudent} from "../student/schemas/student.schema";
 
-export interface IGetGroup {
-    _id: ObjectId;
+export interface IGetTeacher {
     name: string;
-    pupils: IStudent[];
+    age: number;
+    experience: number;
+    studentId: IStudent[];
 }

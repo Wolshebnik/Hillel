@@ -1,6 +1,5 @@
 import { Model } from 'mongoose';
 import { Inject, Injectable } from '@nestjs/common';
-import { TestClass } from './test.service';
 import { IGroup } from '../schemas/group.schema';
 import {IGetGroup} from "../../interfaces/group.interface";
 
@@ -8,7 +7,6 @@ import {IGetGroup} from "../../interfaces/group.interface";
 export class GroupService {
   constructor(
     @Inject('GroupModelToken') private readonly groupModel: Model<IGroup>,
-    public testClass: TestClass,
   ) {}
 
   async createGroup(group: IGroup):Promise<IGroup> {
