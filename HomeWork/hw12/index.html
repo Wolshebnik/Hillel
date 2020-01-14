@@ -43,55 +43,83 @@
       let uploadedImage = "_.jpg";
 
       async function pickImage() {
-        let context = imagepicker.create({
-          mode: "single"
-        });
-        let authorize = await context.authorize();
+        try {
+          let context = imagepicker.create({
+            mode: "single"
+          });
+          let authorize = await context.authorize();
 
-        // .then((selection) => {
-        // 	selection.forEach((selected) => {
-        // 		uploadedImage = selected;
-        // 		cropImage();
-        // 	});
-        // });
-
-        let selection = await context.present();
-
-        selection.forEach(selected => {
-          uploadedImage = selected;
-          cropImage();
-        });
+          const selection = await context.present();
+          for (const selected of selection) {
+            uploadedImage = selected;
+            await cropImage();
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
+
+      // function pickImage() {
+      //   let context = imagepicker.create({
+      //     mode: 'single'
+      //   });
+      //   context
+      //   .authorize()
+      //   .then(() => {
+      //     return context.present();
+      //   })
+      //   .then((selection) => {
+      //     selection.forEach((selected) => {
+      //       uploadedImage= selected;
+      //       cropImage();
+      //     });
+      //   });
+      // }
 
       /**
        * Takes camera photo
        */
       async function takePhoto() {
-        let requestPermissions = await camera.requestPermissions();
+        try {
+          await camera.requestPermissions();
 
-        let imageAsset = await camera.takePicture();
-        uploadedImage = imageAsset;
-        cropImage();
+          const imageAsset = await camera.takePicture();
+          uploadedImage = imageAsset;
+          await cropImage();
+        } catch (e) {
+          console.log(e);
+        }
       }
+
+      // function takePhoto() {
+      //   camera.requestPermissions().then(() => {
+      //     camera.takePicture()
+      //           .then((imageAsset) => {
+      //             uploadedImage = imageAsset;
+      //             cropImage();
+      //           });
+      //   });
+      // }
 
       /**
        * Crops picture
        */
       async function cropImage() {
-        let source = new imageSource.ImageSource();
-        source.fromAsset(this.uploadedImage).then(source => {
-          this.imageCropper.show(source, cropOptions).then(args => {
-            if (args.image !== null) {
-              savePictureToFile(args.image);
-            }
-          });
-        });
-        source = await source.fromAsset(this.uploadedImage);
+        const source = new imageSource.ImageSource();
+        const newSource = await source.fromAsset(this.uploadedImage);
+        const args = await this.imageCropper.show(source, cropOptions);
 
-        let args = await this.imageCropper.show(source, cropOptions);
         if (args.image !== null) {
           savePictureToFile(args.image);
         }
+
+        // source.fromAsset(this.uploadedImage).then(source => {
+        //   this.imageCropper.show(source, cropOptions).then(args => {
+        //     if (args.image !== null) {
+        //       savePictureToFile(args.image);
+        //     }
+        //   });
+        // });
       }
 
       /**
