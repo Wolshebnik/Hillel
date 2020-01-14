@@ -1,4 +1,4 @@
-export interface Formula {
+export interface IFormula {
   parameters: IParam[];
   id: number;
   uuid: string;
@@ -25,8 +25,10 @@ export interface IValidation {
 }
 
 export interface BodyValue {
+  id: number;
   value: number;
 }
+
 // "parameters": [
 //     {
 //         "id": 703,

@@ -1,19 +1,20 @@
 import { Model } from 'mongoose';
 import { Inject, Injectable } from '@nestjs/common';
 import { TestClass } from './test.service';
-import { Group } from '../schemas/group.schema';
+import { IGroup } from '../schemas/group.schema';
+import {IGetGroup} from "../../interfaces/group.interface";
 
 @Injectable()
 export class GroupService {
   constructor(
-    @Inject('GroupModelToken') private readonly groupModel: Model<Group>,
+    @Inject('GroupModelToken') private readonly groupModel: Model<IGroup>,
     public testClass: TestClass,
   ) {}
 
-  async createGroup(group: Group) {
+  async createGroup(group: IGroup):Promise<IGroup> {
     return await this.groupModel.create(group);
   }
-  async searchGroup() {
+  async searchGroup():Promise<IGetGroup> {
     return await this.groupModel.aggregate([
       { $match: {} },
       {

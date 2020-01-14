@@ -25,9 +25,6 @@ export interface IValidation {
 
 }
 
-export interface BodyValue {
-    value: number;
-}
 // "parameters": [
 //     {
 //         "id": 703,

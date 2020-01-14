@@ -1,19 +1,19 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { GroupService } from '../services/group.service';
-import { Group } from '../schemas/group.schema';
+import { IGroup } from '../schemas/group.schema';
+import {IGetGroup} from "../../interfaces/group.interface";
 
 @Controller('group')
 export class GroupController {
   constructor(public groupService: GroupService) {}
 
   @Post('add')
-  async createGroup(@Body() body: Group) {
-    const res = await this.groupService.createGroup(body);
-    return res;
+  async createGroup(@Body() body: IGroup): Promise<IGroup> {
+    return await this.groupService.createGroup(body);
   }
 
-  @Get('')
-  async searchGroup() {
+  @Get('all')
+  async searchGroup():Promise<IGetGroup>  {
     return await this.groupService.searchGroup();
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Formula } from './formula.interface';
+import { IFormula } from './formula.interface';
 
 @Injectable()
 export class AppService {

@@ -1,20 +1,13 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Put,
-  Query,
-} from '@nestjs/common';
-import { Formula, IParam } from './formula.interface';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { IFormula, IParam, BodyValue } from './formula.interface';
+import { evaluate } from 'mathjs';
 
-@Controller('/parameter')
+@Controller()
 export class AppController {
-  formula: Formula;
+  formula: IFormula;
 
-  constructor(private readonly appService: AppService) {
+  constructor(private appService: AppService) {
     this.formula = {
       parameters: [
         {
@@ -106,34 +99,36 @@ export class AppController {
     };
   }
 
-  @Get('/:id')
-  getHello(@Param() param: { id: string }): IParam {
-    return this.formula.parameters.find(curr => curr.id === +param.id);
-  }
-
-  @Delete('/:id')
-  getDelete(@Param() param: { id: string }): Formula {
-    //localhost:3000/parameter/703
-    this.formula.parameters = this.formula.parameters.filter(
-      curr => curr.id !== +param.id,
-    );
+  @Get('/get')
+  getHello(): IFormula {
     return this.formula;
   }
 
-  @Put('/put')
-  getPut(@Body() body: IParam): Formula {
-    // localhost:3000/parameter/put
-    this.formula.parameters = this.formula.parameters.map(curr => {
-      if (curr.id === body.id) curr = body;
-      return curr;
-    });
-    return this.formula;
+  // @ts-ignore
+  // @ts-ignore
+  @Post('/post')
+  async getPost(@Body() body: IParam): Promise<IFormula> {
+    this.formula.parameters.push(body);
+    return this.formula
   }
-  @Get('/')
-  getMinMax(@Query() param: { min: string; max: string }): IParam[] {
-    // localhost:3000/parameter?min=695&max=701
-    return this.formula.parameters.filter(
-      curr => curr.id >= +param.min && curr.id <= +param.max,
-    );
+
+  @Delete('/delete/:id')
+  getDel(@Param() param):IParam[] {
+    //запрос delete http://localhost:3000/delete/696
+    return this.formula.parameters.filter(arr => arr.id !== +param.id);
+  }
+
+  @Post('/object')
+  getPostObject(@Body() body: BodyValue[]): number {
+    // запрос post http://localhost:3000/object
+    // body [{"id": 703, "value": 24}, {"id": 702, "value": 14}, {"id": 701, "value": 35}, {"id": 700, "value": 21}, {"id": 698,
+    // "value": 51}, {"id": 696, "value": 12}]
+    const { parameters, formula } = this.formula;
+    const newObject = parameters.reduce((prev: {}, next: IParam) => {
+      const newBody = body.find(curr => curr.id === next.id);
+      return { ...prev, [next.name]: newBody.value };
+    }, {});
+
+    return evaluate(formula, newObject);
   }
 }

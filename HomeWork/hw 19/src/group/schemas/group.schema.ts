@@ -1,5 +1,4 @@
-// tslint:disable-next-line:no-var-requires
-// const mongoose: any = require('mongoose');
+
 import * as mongoose from 'mongoose';
 
 export const groupSchema: any = new mongoose.Schema({
@@ -13,4 +12,4 @@ export interface Group {
   readonly teacher: string;
 }
 
-export interface ITicket extends Document, Group {}
+export interface IGroup extends Document, Group {}
