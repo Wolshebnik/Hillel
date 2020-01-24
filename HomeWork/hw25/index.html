@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>JAVASCRIPT</title>
+    <style type="text/css">
+      .wrap {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+      img {
+        max-width: 300px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script>
+      // ЗАДАНИЯ ДЛЯ РАЗМИНКИ!!!!!!)))
+
+      //1) Задача состоит в следующем! Делаем GET запрос https://playwithpromise.herokuapp.com/api/order-system получаем даные в виде массива
+      // Создаем разметку с помощью createElement и выводим список продуктов, а именно поля productImage, productName, description!(productImage - ссылка на картинку)
+
+      const getObject = async () => {
+        const obj = await fetch(
+          "https://playwithpromise.herokuapp.com/api/order-system"
+        );
+
+        return await obj.json();
+      };
+
+      const createElement = async () => {
+        const body = document.querySelector("body");
+        const divNew = document.createElement("div");
+        divNew.classList = "wrap";
+        const arr = await getObject();
+
+        arr.forEach(value => {
+          const { productName: name, productImage: image } = value;
+          const div = document.createElement("div");
+          div.innerHTML += `<img src=${image}><br> <h3>${name}</h3>`;
+          divNew.append(div);
+        });
+        body.prepend(divNew);
+      };
+
+      createElement();
+    </script>
+  </body>
+</html>

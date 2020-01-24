@@ -42,11 +42,13 @@
           const f1 = "H+W";
           return eval(f1);
         }
+
         static evaluate(param) {
           const [H, W] = param;
           return H === "H" && W === "W";
         }
       }
+
       class TW {
         static math(param) {
           let [T, W] = param;
@@ -55,11 +57,13 @@
           const f2 = "T+W";
           return eval(f2);
         }
+
         static evaluate(param) {
           const [T, W] = param;
           return T === "T" && W === "W";
         }
       }
+
       class DW {
         static math(param) {
           let [D, W] = param;
@@ -68,11 +72,13 @@
           const f3 = "D*W";
           return eval(f3);
         }
+
         static evaluate(param) {
           const [D, W] = param;
           return D === "D" && W === "W" && param.length === 2;
         }
       }
+
       class DWT {
         static math(param) {
           let [D, W, T] = param;
@@ -82,11 +88,13 @@
           const f4 = "D*W*T";
           return eval(f4);
         }
+
         static evaluate(param) {
           const [D, W, T] = param;
           return D === "D" && W === "W" && T === "T";
         }
       }
+
       function calculation(...param) {
         const arrClass = [HW, TW, DW, DWT];
         const findClass = arrClass.find(a => a.evaluate(param));
