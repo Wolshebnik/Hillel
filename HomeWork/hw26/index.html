@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>hw26</title>
+  </head>
+  <body>
+    <script>
+      // 1) Написать регулярное выражение для email например
+      // vasiapupkin@gmail.com
+      // inokentiiivanov@gmail.com
+      // boriapetrov@mail.ru
+
+      const email = /^\w+@\w+\.\w{2,}$/;
+      console.log(email.test("vasiapupkin@gmail.com"));
+      console.log(email.test("inokentiiivanov@gmail.com"));
+      console.log(email.test("boriapetrov@mail.ru"));
+
+      // 2) повторяем и пишем регулярочку к   /product/20 /person/10/device/90
+
+      console.log("/product/20".replace(/\/\w+\//, ""));
+      console.log(
+        "/person/10/device/90".replace(/^(\/\w{1,}\/(\d+)\/\w+\/\d+)/, "$2")
+      ); // 10
+
+      // 3) Написать регулярочку которая начинается с любой цифры и дальше идет один символ с группы [ghtx] и закнчивается точкой.
+
+      const regExp = /^\d{1}[ghtx]{1}\.$/;
+      console.log(regExp.test("ax.")); //false
+      console.log(regExp.test("5z.")); //false
+      console.log(regExp.test("5x.d")); //false
+      console.log(regExp.test("5g.")); //true
+      console.log(regExp.test("5h.")); //true
+      console.log(regExp.test("5t.")); //true
+      console.log(regExp.test("5x.")); //true
+    </script>
+  </body>
+</html>

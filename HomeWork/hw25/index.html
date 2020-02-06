@@ -2,7 +2,7 @@
   <head>
     <title>JAVASCRIPT</title>
     <style type="text/css">
-      .wrap {
+      .wrapper {
         margin: 0;
         padding: 0;
         display: grid;
@@ -32,7 +32,7 @@
       const createElement = async () => {
         const body = document.querySelector("body");
         const divNew = document.createElement("div");
-        divNew.classList = "wrap";
+        divNew.className = "wrapper";
         const arr = await getObject();
 
         arr.forEach(value => {
