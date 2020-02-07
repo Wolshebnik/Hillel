@@ -18,12 +18,12 @@
       console.log(email.test("inokentiiivanov@gmail.com"));
       console.log(email.test("boriapetrov@mail.ru"));
 
-      // 2) повторяем и пишем регулярочку к   /product/20 /person/10/device/90
+      // 2) повторяем и пишем регулярочку к   /product/20
+      // /person/10/device/90
 
       console.log("/product/20".replace(/\/\w+\//, ""));
-      console.log(
-        "/person/10/device/90".replace(/^(\/\w{1,}\/(\d+)\/\w+\/\d+)/, "$2")
-      ); // 10
+      console.log("/person/10/device/90".replace(/^(\/\w{1,}\/(\d+)\/\w+\/\d+)/, "$2")); // 10
+      console.log("/person/10/device/90".replace(/^(\/\w{1,}\/\d+\/\w+\/)/, "")); // 90
 
       // 3) Написать регулярочку которая начинается с любой цифры и дальше идет один символ с группы [ghtx] и закнчивается точкой.
 
