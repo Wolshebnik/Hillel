@@ -46,8 +46,7 @@ const phones = [
   }
 ];
 
-http
-  .createServer((req, res) => {
+http.createServer((req, res) => {
     let urlParse = url.parse(req.url, true);
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "*");
