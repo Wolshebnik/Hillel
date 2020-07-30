@@ -1,0 +1,16 @@
+.item {
+  display: flex;
+  margin-bottom: 20px;
+  padding: 5px;
+  border: 1px solid blueviolet;
+  justify-content: space-between;
+}
+.button {
+  margin-left: 20px;
+}
+.input-field {
+  margin-right: 20px;
+}
+form{
+  margin-bottom: 20px;
+}
